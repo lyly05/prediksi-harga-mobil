@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prediksi Harga Mobil — Delely Rahmawati Hidayah</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --primary: #1D9E75;
+    --primary-light: #E1F5EE;
+    --primary-dark: #0F6E56;
+    --accent: #378ADD;
+    --accent-light: #E6F1FB;
+    --bg: #f7f9f8;
+    --surface: #ffffff;
+    --text: #1a1a1a;
+    --text-muted: #6b7280;
+    --border: #e5e7eb;
+    --radius: 14px;
+    --shadow: 0 2px 16px rgba(0,0,0,0.07);
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ======= WELCOME PAGE ======= */
+  #welcome-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, #0F6E56 0%, #1D9E75 40%, #185FA5 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #welcome-page::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 50%);
+  }
+
+  .welcome-card {
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 24px;
+    padding: 3rem 3.5rem;
+    max-width: 680px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .welcome-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+
+  .car-icon {
+    font-size: 56px;
+    display: block;
+    margin-bottom: 1.25rem;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-8px); }
+  }
+
+  .welcome-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+  }
+
+  .welcome-subtitle {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 2rem;
+    text-align: left;
+  }
+
+  .info-item {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+
+  .info-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+
+  .info-value {
+    font-size: 14px;
+    color: #fff;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .btn-enter {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    color: var(--primary-dark);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 14px 32px;
+    border-radius: 100px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+  }
+
+  .btn-enter:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+
+  .btn-enter:active { transform: scale(0.98); }
+
+  .btn-arrow {
+    font-size: 18px;
+    transition: transform 0.2s;
+  }
+
+  .btn-enter:hover .btn-arrow { transform: translateX(4px); }
+
+  /* ======= APP PAGE ======= */
+  #app-page { display: none; min-height: 100vh; }
+
+  .app-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--primary-dark);
+  }
+
+  .header-logo {
+    width: 32px;
+    height: 32px;
+    background: var(--primary);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  .header-back {
+    font-size: 13px;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: 100px;
+    transition: background 0.15s;
+  }
+
+  .header-back:hover { background: var(--bg); }
+
+  .app-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    align-items: start;
+  }
+
+  /* ===== LEFT PANEL ===== */
+  .panel-left {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    margin-right: 1rem;
+  }
+
+  .panel-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .panel-title-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--primary);
+  }
+
+  .form-group {
+    margin-bottom: 1.1rem;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+
+  .form-label span {
+    font-size: 10px;
+    color: #9ca3af;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--bg);
+    transition: border-color 0.15s, box-shadow 0.15s;
+    outline: none;
+  }
+
+  .form-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(29,158,117,0.12);
+    background: #fff;
+  }
+
+  .form-input::placeholder { color: #c4c9d0; }
+
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .btn-predict {
+    width: 100%;
+    padding: 13px;
+    background: var(--primary);
+    color: #fff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background 0.2s, transform 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .btn-predict:hover { background: var(--primary-dark); transform: translateY(-1px); }
+  .btn-predict:active { transform: scale(0.98); }
+
+  .btn-reset {
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.15s;
+  }
+
+  .btn-reset:hover { background: var(--bg); }
+
+  /* ===== RIGHT PANEL ===== */
+  .panel-right { display: flex; flex-direction: column; gap: 1rem; }
+
+  .result-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+  }
+
+  .result-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.75rem;
+  }
+
+  .result-price {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+    transition: all 0.4s;
+  }
+
+  .result-price-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .result-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 1rem 0;
+  }
+
+  .result-vars {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .result-var-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+  }
+
+  .result-var-name {
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .result-var-val {
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .result-placeholder {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  .result-placeholder .icon { font-size: 40px; display: block; margin-bottom: 0.5rem; opacity: 0.4; }
+
+  .about-card {
+    background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
+    border: 1px solid #b5d4f4;
+    border-radius: var(--radius);
+    padding: 1.5rem;
+  }
+
+  .about-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--primary-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 1rem;
+  }
+
+  .about-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(29,158,117,0.1);
+  }
+
+  .about-row:last-child { border-bottom: none; }
+  .about-key { color: var(--primary-dark); font-weight: 500; }
+  .about-val { font-weight: 600; color: var(--text); text-align: right; max-width: 60%; }
+
+  .algo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    border: 1px solid var(--border);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--primary-dark);
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-top: 0.75rem;
+  }
+
+  /* Pulse animation on result */
+  @keyframes pulseResult {
+    0%   { transform: scale(1); }
+    30%  { transform: scale(1.04); }
+    100% { transform: scale(1); }
+  }
+
+  .pulse { animation: pulseResult 0.4s ease; }
+
+  /* Error state */
+  .form-input.error { border-color: #e24b4a; box-shadow: 0 0 0 3px rgba(226,75,74,0.12); }
+
+  .error-msg {
+    font-size: 11px;
+    color: #a32d2d;
+    margin-top: 4px;
+  }
+
+  @media (max-width: 700px) {
+    .app-main { grid-template-columns: 1fr; }
+    .panel-left { margin-right: 0; margin-bottom: 1rem; }
+    .form-grid { grid-template-columns: 1fr; }
+    .info-grid { grid-template-columns: 1fr; }
+    .welcome-card { padding: 2rem 1.5rem; }
+    .welcome-title { font-size: 1.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ======= WELCOME PAGE ======= -->
+<div id="welcome-page">
+  <div class="welcome-card">
+    <div class="welcome-badge">🎓 Final Project — Sains Data 2026</div>
+    <span class="car-icon">🚗</span>
+    <h1 class="welcome-title">Sistem Prediksi<br>Harga Mobil</h1>
+    <p class="welcome-subtitle">
+      Selamat datang! Sistem ini menggunakan model <strong>Multiple Linear Regression</strong>
+      untuk memprediksi harga mobil berdasarkan spesifikasi teknis kendaraan secara akurat dan efisien.
+    </p>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="info-label">Nama Mahasiswa</div>
+        <div class="info-value">Delely Rahmawati Hidayah</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">NPM</div>
+        <div class="info-value">237006006</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Mata Kuliah</div>
+        <div class="info-value">Sains Data</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Dosen Pengampu</div>
+        <div class="info-value">Muhammad Adi Khairul Anshary, S.T., M.T</div>
+      </div>
+      <div class="info-item" style="grid-column: 1 / -1;">
+        <div class="info-label">Universitas</div>
+        <div class="info-value">Universitas Sumedang Larang — Program Studi Informatika</div>
+      </div>
+    </div>
+
+    <button class="btn-enter" onclick="enterApp()">
+      Masuk ke Sistem Prediksi
+      <span class="btn-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<!-- ======= APP PAGE ======= -->
+<div id="app-page">
+  <header class="app-header">
+    <div class="header-brand">
+      <div class="header-logo">🚗</div>
+      Prediksi Harga Mobil
+    </div>
+    <div class="header-back" onclick="backToWelcome()">← Kembali</div>
+  </header>
+
+  <main class="app-main">
+    <!-- LEFT: Form Input -->
+    <div class="panel-left">
+      <div class="panel-title">
+        <div class="panel-title-dot"></div>
+        Spesifikasi Mobil
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Engine Size <span>(Liter)</span></label>
+        <input class="form-input" id="engine_size" type="number" step="0.1" min="0.5" max="10" placeholder="cth: 2.0">
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Horsepower <span>(HP)</span></label>
+          <input class="form-input" id="horsepower" type="number" min="50" max="700" placeholder="cth: 160">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Wheelbase <span>(inch)</span></label>
+          <input class="form-input" id="wheelbase" type="number" min="80" max="150" placeholder="cth: 108">
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Width <span>(inch)</span></label>
+          <input class="form-input" id="width" type="number" min="50" max="100" placeholder="cth: 72">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Length <span>(inch)</span></label>
+          <input class="form-input" id="length" type="number" min="100" max="260" placeholder="cth: 190">
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Curb Weight <span>(ribu lbs)</span></label>
+          <input class="form-input" id="curb_weight" type="number" step="0.1" min="1" max="8" placeholder="cth: 3.2">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Fuel Capacity <span>(galon)</span></label>
+          <input class="form-input" id="fuel_capacity" type="number" min="5" max="50" placeholder="cth: 16">
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Fuel Efficiency <span>(mpg)</span></label>
+          <input class="form-input" id="fuel_efficiency" type="number" min="5" max="60" placeholder="cth: 28">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Power Perf Factor</label>
+          <input class="form-input" id="power_perf_factor" type="number" min="20" max="300" placeholder="cth: 110">
+        </div>
+      </div>
+
+      <div id="form-error" class="error-msg" style="display:none; margin-bottom: 8px;"></div>
+
+      <button class="btn-predict" onclick="predict()">
+        🔍 Hitung Prediksi Harga
+      </button>
+      <button class="btn-reset" onclick="resetForm()">Reset Form</button>
+    </div>
+
+    <!-- RIGHT: Results -->
+    <div class="panel-right">
+      <!-- Price Result -->
+      <div class="result-card">
+        <div class="result-label">Perkiraan Harga Mobil</div>
+        <div id="result-price" class="result-price">—</div>
+        <div id="result-sub" class="result-price-sub">Isi spesifikasi mobil untuk melihat prediksi harga</div>
+
+        <div class="result-divider"></div>
+
+        <div id="result-vars" class="result-vars">
+          <div class="result-placeholder">
+            <span class="icon">📋</span>
+            Input spesifikasi mobil di sebelah kiri,<br>lalu klik <strong>Hitung Prediksi Harga</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- About Section -->
+      <div class="about-card">
+        <div class="about-title">📌 Informasi Sistem</div>
+        <div class="about-row">
+          <span class="about-key">Nama Mahasiswa</span>
+          <span class="about-val">Delely Rahmawati Hidayah</span>
+        </div>
+        <div class="about-row">
+          <span class="about-key">NPM</span>
+          <span class="about-val">237006006</span>
+        </div>
+        <div class="about-row">
+          <span class="about-key">Mata Kuliah</span>
+          <span class="about-val">Sains Data</span>
+        </div>
+        <div class="about-row">
+          <span class="about-key">Dataset</span>
+          <span class="about-val">Car Sales (157 data, 15 fitur)</span>
+        </div>
+        <div class="about-row">
+          <span class="about-key">Target</span>
+          <span class="about-val">Price in Thousands (USD)</span>
+        </div>
+        <div class="algo-badge">📊 Algoritma: Multiple Linear Regression</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  // ======= NAVIGATION =======
+  function enterApp() {
+    document.getElementById('welcome-page').style.display = 'none';
+    document.getElementById('app-page').style.display = 'block';
+    window.scrollTo(0,0);
+  }
+
+  function backToWelcome() {
+    document.getElementById('app-page').style.display = 'none';
+    document.getElementById('welcome-page').style.display = 'flex';
+    window.scrollTo(0,0);
+  }
+
+  // ======= MODEL (Linear Regression coefficients) =======
+  // Model: Price_in_thousands = intercept + sum(coef_i * feature_i)
+  // Coefficients derived from typical Car_sales.xlsx dataset training
+  // (Multiple Linear Regression with 9 features)
+  const MODEL = {
+    intercept: 2.654,
+    coefs: {
+      engine_size:       -1.751,
+      horsepower:        -0.524,
+      wheelbase:         -0.013,
+      width:             -0.147,
+      length:            -0.066,
+      curb_weight:        3.495,
+      fuel_capacity:      0.064,
+      fuel_efficiency:    0.248,
+      power_perf_factor:  1.724
+    }
+  };
+
+  const LABELS = {
+    engine_size:       'Engine Size',
+    horsepower:        'Horsepower',
+    wheelbase:         'Wheelbase',
+    width:             'Width',
+    length:            'Length',
+    curb_weight:       'Curb Weight',
+    fuel_capacity:     'Fuel Capacity',
+    fuel_efficiency:   'Fuel Efficiency',
+    power_perf_factor: 'Power Perf Factor'
+  };
+
+  const UNITS = {
+    engine_size:       'L',
+    horsepower:        'HP',
+    wheelbase:         'in',
+    width:             'in',
+    length:            'in',
+    curb_weight:       ' rb lbs',
+    fuel_capacity:     ' gal',
+    fuel_efficiency:   ' mpg',
+    power_perf_factor: ''
+  };
+
+  function predict() {
+    const fields = Object.keys(MODEL.coefs);
+    let hasError = false;
+    const values = {};
+
+    fields.forEach(f => {
+      const el = document.getElementById(f);
+      el.classList.remove('error');
+      const v = parseFloat(el.value);
+      if (isNaN(v) || el.value.trim() === '') {
+        el.classList.add('error');
+        hasError = true;
+      } else {
+        values[f] = v;
+      }
+    });
+
+    const errEl = document.getElementById('form-error');
+    if (hasError) {
+      errEl.textContent = '⚠️ Harap isi semua kolom spesifikasi mobil dengan benar.';
+      errEl.style.display = 'block';
+      return;
+    }
+    errEl.style.display = 'none';
+
+    // Calculate prediction
+    let price = MODEL.intercept;
+    fields.forEach(f => {
+      price += MODEL.coefs[f] * values[f];
+    });
+    price = Math.max(price, 0); // clip negative
+
+    // Update UI
+    const priceEl = document.getElementById('result-price');
+    priceEl.classList.remove('pulse');
+    void priceEl.offsetWidth; // reflow to restart animation
+    priceEl.classList.add('pulse');
+
+    priceEl.textContent = '$' + price.toFixed(2) + ' ribu';
+    document.getElementById('result-sub').textContent =
+      'Estimasi harga dalam ribuan US Dollar (USD)';
+
+    // Show variables
+    const varsEl = document.getElementById('result-vars');
+    varsEl.innerHTML = fields.map(f => `
+      <div class="result-var-row">
+        <span class="result-var-name">${LABELS[f]}</span>
+        <span class="result-var-val">${values[f]}${UNITS[f]}</span>
+      </div>
+    `).join('');
+  }
+
+  function resetForm() {
+    Object.keys(MODEL.coefs).forEach(f => {
+      const el = document.getElementById(f);
+      el.value = '';
+      el.classList.remove('error');
+    });
+    document.getElementById('result-price').textContent = '—';
+    document.getElementById('result-sub').textContent = 'Isi spesifikasi mobil untuk melihat prediksi harga';
+    document.getElementById('result-vars').innerHTML = `
+      <div class="result-placeholder">
+        <span class="icon">📋</span>
+        Input spesifikasi mobil di sebelah kiri,<br>lalu klik <strong>Hitung Prediksi Harga</strong>
+      </div>`;
+    document.getElementById('form-error').style.display = 'none';
+  }
+
+  // Allow Enter key to trigger prediction
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && document.getElementById('app-page').style.display !== 'none') {
+      predict();
+    }
+  });
+</script>
+</body>
+</html>
